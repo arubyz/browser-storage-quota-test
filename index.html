@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Demo HTML app</title>
+    </head>
+    <body>
+        <script>
+            // Check the browser's storage quota
+            // See: https://web.dev/storage-for-the-web/#check
+            console.log('checking storage quota');
+            if (navigator.storage && navigator.storage.estimate) {
+                console.log('navigator.storage supported');
+                navigator.storage.estimate().then(quota => {
+                    // quota.usage -> Number of bytes used.
+                    // quota.quota -> Maximum number of bytes available.
+                    const percentageUsed = (quota.usage / quota.quota) * 100;
+                    console.log(`You've used ${percentageUsed}% of the available storage.`);
+                    const remaining = quota.quota - quota.usage;
+                    console.log(`You can write up to ${remaining} more bytes.`);
+                });
+            } else {
+                console.log('navigator.storage NOT supported');
+            }
+        </script>
+        <h1 id="demo_text"></h1>
+    </body>
+</html>
